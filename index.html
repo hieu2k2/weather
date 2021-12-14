@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" pattern="[a-zA-Z]" id="input" />
+    <button onclick="thoitiet()">Seach</button>
+    <p id="demo"></p>
+    <script>
+      let input = document.getElementById("input");
+      let demo = document.getElementById("demo");
+      let api_key = "8b8d7a7c28a8d088b2e824c2217f8c7e";
+      function thoitiet() {
+        if (thoitiet.value.length < 1) {
+          thoitiet.focus();
+        } else {
+          let url = "https://api.openweathermap.org/data/2.5/weather";
+          url += "?q=" + thoitiet.value + "&appid=" + api_key;
+          let result = axios.get(url);
+          result.then(function (response) {
+            demo.innerHTML =
+              "Nhiệt độ là: " +
+              (response.data.main.temp - 273.15) +
+              " C <br>" +
+              "Thời tiết: " +
+              response.data.weather[0].description;
+          });
+          result.catch(function (err) {
+            console.log("err ", err);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
